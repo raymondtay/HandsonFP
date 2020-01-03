@@ -97,6 +97,7 @@ case class Person(name: String, email : String)
 object MyJson {
   import JsonWriterInstances._ // let's bring in the implicit values.
   import JsonReaderInstances._ // let's bring in the implicit values.
+  import syntax._
 
   def toJson[A](obj: A)(implicit writer : JsonWriter[A]) = 
     writer.write(obj)
@@ -111,6 +112,10 @@ object MyJson {
 
     println(fromJson[Person](toJson(p))) // Scala compiler discovers the right implicit value and applies it.
 
+    // The previous syntax is probably favored by programmers used to the
+    // Fp-style; but if you like another style which is more OOP-styled, you
+    // can leverage implicit classes in Scala.
+    println(p.toJson.fromJson[Person]) 
   }
 
 }
