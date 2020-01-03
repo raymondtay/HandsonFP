@@ -54,8 +54,8 @@ object List {
   def foldRight[A,B](xs: List[A], z : B)(f: (A, B) => B) : B = ???
 
   // Exercise 6 : Rewrite 'sum' and 'product' interms of 'foldRight'.
-  def sum2[A](xs: List[A]) : A = ???
-  def product2[A](xs: List[A]) : A = ???
+  def sum2(xs: List[Int]) = ???
+  def product2(xs: List[Int]) : Int = ???
 
   // Exercise 7 : implement `length` which calculates the length of any list
   //              using `foldRight` only.
