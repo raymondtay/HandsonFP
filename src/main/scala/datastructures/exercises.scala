@@ -8,7 +8,7 @@ object Exercises {
 
   // Exercise 1 : Can you figure out a way generalize the `sum` and `product`
   //              functions you saw in List.scala ?
-  def generalSumAndProduct[A](xs: List[A])(f: (A, A) => A) : A = ???
+  def generalSumAndProduct[A](xs: List[A], z: A )(f: (A, A) => A) : A = ???
 
   // Exercise 2 : implement `append` interms of either `foldRight` or
   // `foldLeft`
