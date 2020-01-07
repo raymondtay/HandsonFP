@@ -5,6 +5,21 @@ This series of exercises might be a little overwhelming for the absolute
 beginner but once you have gained some proficiency in Scala, i am positive you
 would be able to follow.
 
+## Getting Started
+
+You should be comfortable with the Linux/Unix/WinOS/macOS environment
+configuring it. I do not have instructions on how to leverage IDEs, so please
+use Google or Stackoverflow for your individual purposes.
+
+To start from the ground up, you basically need the following:
+- You would need a Oracle JDK version `1.8` to be installed on your environment.
+- You would need to install the Scala build tool aka `sbt` from
+  [here](https://www.scala-sbt.org/1.x/docs/Setup.html). (**Note:** There're  
+  installation instructions on each operating system like macOS, Linux/Unix,
+  Win OS.)
+- Your favourite editor (i use [neovim](https://neovim.io/)) or IDE.
+- You should not have trouble cloning this repository.
+
 ### A little about me
 
 I really enjoy Scala, Haskell and have developed some skills in functional
