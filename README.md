@@ -13,6 +13,7 @@ use Google or Stackoverflow for your individual purposes.
 
 To start from the ground up, you basically need the following:
 - You would need a Oracle JDK version `1.8` to be installed on your environment.
+  - Tested on `JDK8`, `JDK11`, `JDK12` to be working with Scala `2.13.1`
 - You would need to install the Scala build tool aka `sbt` from
   [here](https://www.scala-sbt.org/1.x/docs/Setup.html). (**Note:** There're  
   installation instructions on each operating system like macOS, Linux/Unix,
@@ -30,9 +31,24 @@ Onward and forward !
 
 ## Format of the tutorial
 
-This tutorial is drawn from a few sources of inspiration but since they are
-open sourced, there's no danger of forgery here but i hope the original authors
-do not fault me if i added some embellishment here and there.
+This tutorial is drawn from a few sources of inspiration and its based on the
+following approach:
+- I present an introduction to each topic in the package to help develop the
+  intuition for them.
+- Exercises in the package are presented and should be attempted
+- Answers revealed 1 week after presentation
+- Recurse till we reach the end.
+
+### Table of contents:
+
+The order in which we are going to proceed by working through the following
+exercises housed in the following packages:
+
+- gettingstarted
+- datastructures
+- handlingerrors
+- state
+- TBA
 
 Note: All answers to the exercises will be revealed 1 class after each training.
 
