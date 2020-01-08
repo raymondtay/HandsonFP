@@ -37,6 +37,7 @@ object MyTickCounter {
 
   // function which allows us to lift a value into the type
   def unit[A](a: A) : Counter[A] = tkr => (a, tkr)
+
   // function which allows us to transform the value without changing the
   // container aka structure preserving transformation
   def map[A,B](s: Counter[A])(f: A => B) : Counter[B] =
@@ -45,6 +46,33 @@ object MyTickCounter {
       (f(a), tkr1)
     }
 
+  // Exercise 1: implement `flatMap`
+  def flatMap[A,B](f: Counter[A])(g: A => Counter[B]): Counter[B] =
+    tkr => {
+      val (a, tkr1) = f(tkr)
+      g(a)(tkr1)
+    }
+
+  // Exercise 2: implement `map2` which combines 2 state actions into one.
+  //             if you have attempted the previous exercises, this should not
+  //             be unfamiliar 
+  def map2[A,B,C](a: Counter[A], b: Counter[B])(f: (A,B) => C) : Counter[C] = ???
+
+  // this is an example of a higher-combinator where we build further
+  // abstractions using a simpler abstraction.
+  def both[A,B](a: Counter[A], b: Counter[B]): Counter[(A, B)] = 
+    map2(a, b)((_ , _))
+
+  // Exercise 3: implement `sequence`
+  def sequence[A](fs: List[Counter[A]]) : Counter[List[A]] = ???
+
+  // ------ Bonus exercises --------------- //
+
+  // Bonus exercise 1: reimplement `map` interms of `flatMap`.
+  def mapB[A,B](s: Counter[A])(f: A => B) : Counter[B] = ???
+
+  // Bonus exercise 2: reimplement `map2` interms of `flatMap`.
+  def map2B[A,B,C](a: Counter[A], b: Counter[B])(f: (A,B) => C) : Counter[C] = ???
 }
 
 
