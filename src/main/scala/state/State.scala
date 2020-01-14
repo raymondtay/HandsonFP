@@ -75,5 +75,21 @@ object MyTickCounter {
   def map2B[A,B,C](a: Counter[A], b: Counter[B])(f: (A,B) => C) : Counter[C] = ???
 }
 
+// Generalize it
+case class State[S,+A](run: S => (A, S)) {
 
+  // Exercise 1: Generalize the functions `unit`, `map`, `map2`, `flatMap`
+  def map[B](f: A => B) : State[S, B] = ???
+
+  def flatMap[B](f: A => State[S,B]) : State[S,B] = ???
+
+  def map2[B,C](s: State[S, B])(f: (A, B) => C) : State[S,C] = ???
+}
+
+// @see [companion object in Scala](https://docs.scala-lang.org/overviews/scala-book/companion-objects.html)
+object State {
+
+  def unit[S,A](a: A) : State[S,A] = ???
+
+}
 
