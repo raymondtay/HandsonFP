@@ -13,7 +13,7 @@ object List {
   }
 
   def product(is : List[Int]) : Double = is match { // pattern matching
-    case EmptyList => 0.0
+    case EmptyList => 1.0
     case Cons(x, xs) => x * sum(xs)
   }
 

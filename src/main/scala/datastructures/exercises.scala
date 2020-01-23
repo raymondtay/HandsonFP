@@ -20,7 +20,15 @@ object Exercises {
 
   // Exercise 4 : generalize the application of a function to each element of
   // the list
-  def map[A,B](xs: List[A])(f: A => B) : List[B] = ???
+  def map[A,B](xs: List[A])(f: A => B) : List[B] = {
+    def go(as: List[A], bs: List[B]) : List[B] = 
+      as match {
+        case EmptyList => bs
+        case Cons(h, t) => go(t, Cons(f(h), bs))
+      }
+    go(xs, EmptyList)
+  }
+
 
   // Exercise 5 : implement a function filter that removes elements from a list
   // unless they satisfy the predicate

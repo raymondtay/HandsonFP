@@ -110,6 +110,7 @@ object MyJson {
  
     val p = Person("raymond", "ray@abc.com")
 
+    println(toJson(p)) // Scala compiler discovers the right implicit value and applies it.
     println(fromJson[Person](toJson(p))) // Scala compiler discovers the right implicit value and applies it.
 
     // The previous syntax is probably favored by programmers used to the
