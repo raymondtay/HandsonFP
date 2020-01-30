@@ -7,7 +7,7 @@ import org.scalacheck.Prop.forAll
 
 import scala.collection.immutable.ArraySeq
 
-object MyList extends Properties("List") {
+object ListSpec extends Properties("List") {
 
   implicit val good1 : Gen[Array[Int]] =
     for {
