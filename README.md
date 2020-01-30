@@ -1,5 +1,7 @@
 # HandsonFP
 
+![functional programming pigs](./imgs/fppigs.jpeg)
+
 This tutorial assumes that you have some prior experience programming in Scala.
 This series of exercises might be a little overwhelming for the absolute
 beginner but once you have gained some proficiency in Scala, i am positive you
@@ -20,6 +22,8 @@ To start from the ground up, you basically need the following:
   Win OS.)
 - Your favourite editor (i use [neovim](https://neovim.io/)) or IDE.
 - You should not have trouble cloning this repository.
+
+![sample](./imgs/sample.jpeg)
 
 ### A little about me
 
@@ -47,7 +51,7 @@ exercises housed in the following packages:
 - gettingstarted
 - datastructures
 - handlingerrors
-- state
+- managing _state_; composing _state_ functions
 - TBA
 
 Note: All answers to the exercises will be revealed 1 class after each training.
