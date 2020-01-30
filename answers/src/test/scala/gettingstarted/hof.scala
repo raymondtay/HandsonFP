@@ -6,7 +6,7 @@ import org.scalacheck.Properties
 import org.scalacheck.Prop.forAll
 
 
-object MyHoF extends Properties("HoF") {
+object HoFSpec extends Properties("HoF") {
 
   implicit val good1 : Gen[(Array[Double], Double)] =
     for {
