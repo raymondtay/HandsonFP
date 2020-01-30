@@ -1,6 +1,6 @@
 # HandsonFP
 
-![functional programming pigs](./imgs/fppigs.jpeg)
+![functional programming pigs](./imgs/fppigs.jpg)
 
 This tutorial assumes that you have some prior experience programming in Scala.
 This series of exercises might be a little overwhelming for the absolute
