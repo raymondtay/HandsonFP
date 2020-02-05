@@ -7,6 +7,7 @@ import scala.util._
 object MyCustomErrorHandling {
 
   def divBy(n: Int)(denoms: List[Int]) : Either[DivByError[Int],List[Int]] = {
+    @annotation.tailrec // TCO and divBy is now stack safe.
     def go(dnoms: List[Int], accum: List[Int]) : Either[DivByError[Int],List[Int]] =
       dnoms match {
         case     Nil => Right( accum )
