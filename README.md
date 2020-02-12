@@ -56,6 +56,36 @@ exercises housed in the following packages:
 
 Note: All answers to the exercises will be revealed 1 class after each training.
 
+### Property-based Testing
+
+In this repository, you will soon discover that property-based testing (in the
+`sbt` console, fire `test` or `sbt test` if you prefer to run directly from the
+directory) is implemented which serves two (2) purposes:
+
+- Validating the functionality of your implementation
+- Cornerstone for you to leverage on these tests to expand your own learnings
+
+```scala
+sbt:Hands-on Functional Programming in Scala> test
+[info] Compiling 4 Scala sources to /Users/raymondtay/HandsonFP/answers/target/scala-2.13/test-classes ...
+[info] Done compiling.
+[info] + MyTransformation.isSorted for Double: OK, passed 100 tests.
+[info] + MyTransformation.isSorted for Ints: OK, passed 100 tests.
+[info] + HoF.isSorted - Ints: OK, passed 100 tests.
+[info] + List.`sum` of ints: OK, passed 100 tests.
+[info] + List.`product` of ints: OK, passed 100 tests.
+[info] + List.`append` left-/right-identity : OK, passed 100 tests.
+[info] + List.`append` general scenarios : OK, passed 100 tests.
+[info] + MyTransformation.isSorted for Strings: OK, passed 100 tests.
+[info] + HoF.findFirst - Strings: OK, passed 100 tests.
+[info] + Tree.maximum of trees: OK, passed 100 tests.
+[info] + Tree.size of trees are at least zero: OK, passed 100 tests.
+[info] + Tree.depth of trees: OK, passed 100 tests.
+[info] + Tree.`map` of trees: OK, passed 100 tests.
+[info] Passed: Total 14, Failed 0, Errors 0, Passed 14
+[success] Total time: 4 s, completed 12 Feb, 2020 8:44:42 AM
+```
+
 ## References
 
 - Programming in Scala (4th Edition) by Martian Odersky, Lex Spoon, Bill
