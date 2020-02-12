@@ -23,6 +23,7 @@ lazy val root = (project in file("."))
 lazy val answers = (project in file("answers"))
   .settings(commonsettings)
   .settings(
-    name := "answers to the exercises"
+    name := "answers to the exercises",
+    Test / parallelExecution := false
   )
 
