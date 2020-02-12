@@ -9,30 +9,26 @@ package state
 // 
 //
 
+// Defines a behavior we wish.
+trait Ticker {
+  def tick() : (Int, Ticker)
+}
+// Defines a model that implements the behavior we wish.
+case class Model(current : Int, previous : Int) extends Ticker {
 
-case class OOPTick() {
-  // proper encapsulation
-  private var previousCounter = 0
-  private var currentCounter = 0
-  // "getters"
-  def getCurrent = currentCounter
-  def getPrevious = previousCounter
-  // "setters"
-  def tick() = { previousCounter = currentCounter; currentCounter += 1}
+  def newTicker = Model(current + 1, current)
+
+  def tick() : (Int, Ticker) = {
+    (previous, newTicker)
+  }
 }
 
-object MyTickCounter {
+object TickerOps {
 
-  // A simple counter but limited in prowess as compare to `OOPTick`.
-  def tick(c: Int) = (c, c+1) // type signature is Int => (Int, Int)
-
-  // The approach taken by `OOPTick` is far more common than you initially
+  // The approach taken by `Ticker` is far more common than you initially
   // thought ☺
   //
 
-  trait Ticker {
-    def nextTick() : (Int, Ticker)
-  }
   type Counter[+A] = Ticker => (A, Ticker)
 
   // function which allows us to lift a value into the type
@@ -46,6 +42,17 @@ object MyTickCounter {
       (f(a), tkr1)
     }
 
+  // Given a ticker and the number of times i like it to "tick", now 
+  // we can control how many times the ticker will tick
+  def ticktok(times: Int)(ticker: Ticker) : (List[Int], Ticker) = {
+    if (times == 0) (List(0), ticker)
+    else {
+      val (x, s1) = ticker.tick
+      val (y, s2) = ticktok(times - 1)(s1) 
+      (x :: y, s2)
+    }
+  }
+
   // Exercise 1: implement `flatMap`
   def flatMap[A,B](f: Counter[A])(g: A => Counter[B]): Counter[B] =
     tkr => {
@@ -56,14 +63,15 @@ object MyTickCounter {
   // Exercise 2: implement `map2` which combines 2 state actions into one.
   //             if you have attempted the previous exercises, this should not
   //             be unfamiliar 
-  def map2[A,B,C](a: Counter[A], b: Counter[B])(f: (A,B) => C) : Counter[C] = ???
+  def map2[A,B,C](ca: Counter[A], cb: Counter[B])(f: (A,B) => C) : Counter[C] = ???
 
   // this is an example of a higher-combinator where we build further
   // abstractions using a simpler abstraction.
   def both[A,B](a: Counter[A], b: Counter[B]): Counter[(A, B)] = 
     map2(a, b)((_ , _))
 
-  // Exercise 3: implement `sequence`
+  // Exercise 3: implement `sequence` which evaluates each monadic action
+  // in the structure from left to right, and collect the results.
   def sequence[A](fs: List[Counter[A]]) : Counter[List[A]] = ???
 
   // ------ Bonus exercises --------------- //
@@ -76,33 +84,29 @@ object MyTickCounter {
 }
 
 // Generalize it
-case class State[S,+A](run: S => (A, S)) { self =>
+case class State[S,+A](run: S => (A, S)) {
 
   // Exercise 1: Generalize the functions `unit`, `map`, `map2`, `flatMap`
-  def map[B](f: A => B) : State[S, B] =
-    State{(s:S) => 
-      val (a,s2) = self.run(s)
-      (f(a), s2)
-    }
+  def map[B](f: A => B) : State[S, B] = ???
 
-  def flatMap[B](f: A => State[S,B]) : State[S,B] =
-    State{(s:S) => 
-      val (a, s2) = self.run(s)
-      f(a).run(s2)
-    }
+  // Setting a state
+  def set[S](s: S): State[S, Unit] = ???
 
-  def map2[B,C](s: State[S, B])(f: (A, B) => C) : State[S,C] =
-    State{(ss:S) =>
-      val (a, s2) = self.run(ss)
-      val (b, s3) = s.run(ss)
-      (f(a, b), s3)
-    }
+  // Getting the state
+  def get[S] : State[S,S] = ???
+
+  // Modify the state
+  def modify[S](f: S => S): State[S, Unit] = ???
+
+  def flatMap[B](f: A => State[S,B]) : State[S,B] = ???
+
+  def map2[B,C](s: State[S, B])(f: (A, B) => C) : State[S,C] = ???
 }
 
 // @see [companion object in Scala](https://docs.scala-lang.org/overviews/scala-book/companion-objects.html)
 object State {
 
-  def unit[S,A](a: A) : State[S,A] = State((s:S) => (a, s))
+  def unit[S,A](a: A) : State[S,A] = ???
 
 }
 
