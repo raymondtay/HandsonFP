@@ -52,6 +52,7 @@ exercises housed in the following packages:
 - datastructures
 - handlingerrors
 - managing _state_; composing _state_ functions
+- parallelism and concurrency in Scala
 - TBA
 
 Note: All answers to the exercises will be revealed 1 class after each training.
@@ -69,20 +70,27 @@ directory) is implemented which serves two (2) purposes:
 sbt:Hands-on Functional Programming in Scala> test
 [info] Compiling 4 Scala sources to /Users/raymondtay/HandsonFP/answers/target/scala-2.13/test-classes ...
 [info] Done compiling.
-[info] + MyTransformation.isSorted for Double: OK, passed 100 tests.
-[info] + MyTransformation.isSorted for Ints: OK, passed 100 tests.
-[info] + HoF.isSorted - Ints: OK, passed 100 tests.
+[info] + Tree.size of trees are at least zero: OK, passed 100 tests.
+[info] + Tree.maximum of trees: OK, passed 100 tests.
+[info] + Tree.depth of trees: OK, passed 100 tests.
+[info] + Tree.`map` of trees: OK, passed 100 tests.
 [info] + List.`sum` of ints: OK, passed 100 tests.
 [info] + List.`product` of ints: OK, passed 100 tests.
 [info] + List.`append` left-/right-identity : OK, passed 100 tests.
 [info] + List.`append` general scenarios : OK, passed 100 tests.
-[info] + MyTransformation.isSorted for Strings: OK, passed 100 tests.
+[info] + State.`set` will always set its state w/o altering its result: OK, passed 100 tests.
+[info] + State.`unit` will always return its pre-defined result: OK, passed 100 tests.
+[info] + State.`flatMap` will always chain its state, optionally returning a computation on its results: OK, passed 100 tests.
+[info] + State.`modify` will always replace its state, discarding its result.: OK, passed 100 tests.
+[info] + State.`map2` will combine two state functions via a binary operation: OK, passed 100 tests.
+[info] + State.`map` will always apply its function: OK, passed 100 tests.
 [info] + HoF.findFirst - Strings: OK, passed 100 tests.
-[info] + Tree.maximum of trees: OK, passed 100 tests.
-[info] + Tree.size of trees are at least zero: OK, passed 100 tests.
-[info] + Tree.depth of trees: OK, passed 100 tests.
-[info] + Tree.`map` of trees: OK, passed 100 tests.
-[info] Passed: Total 14, Failed 0, Errors 0, Passed 14
+[info] + HoF.findFirst - Ints: OK, passed 100 tests.
+[info] + HoF.isSorted - Ints: OK, passed 100 tests.
+[info] + MyTransformation.isSorted for Strings: OK, passed 100 tests.
+[info] + MyTransformation.isSorted for Ints: OK, passed 100 tests.
+[info] + MyTransformation.isSorted for Double: OK, passed 100 tests.
+[info] Passed: Total 20, Failed 0, Errors 0, Passed 20
 [success] Total time: 4 s, completed 12 Feb, 2020 8:44:42 AM
 ```
 
