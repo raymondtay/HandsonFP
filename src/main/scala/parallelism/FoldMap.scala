@@ -1,5 +1,10 @@
 package parallel
 
+import scala.util._
+import scala.concurrent._
+import scala.concurrent.duration._
+import scala.language.postfixOps
+
 /**
  * The functional Map Reduce algorithm
  * as rendered by Jimmy Lin (University of Maryland) paper on using Monoids
@@ -17,6 +22,21 @@ trait FoldMap {
     Foldable[F].fold(fb)(Monoid[B].mzero)(_ |+| _)
   }
 
+  // scala.concurrent.Future implementation 
+  def foldMapPar[A,B: Monoid](xs: List[A])(f: A => B)(implicit ec : ExecutionContext) : Future[B] = {
+    val numCores = Runtime.getRuntime.availableProcessors
+
+    val groupSize = (1.0 * xs.size / numCores).ceil.toInt
+
+    val groups = xs.grouped(groupSize) // create 1 group for each CPU
+    val futures : Iterator[Future[B]] = // for each group, we fold the result
+      groups.map(group => Future(foldMap(group)(f)))
+
+    // now we have a list of futures, we collapse each value to a single value
+    Future.sequence(futures).map{ iterable =>
+      iterable.foldLeft(Monoid[B].mzero)(_ |+| _)
+    }
+  }
 }
 
 object MapReduce extends App with FoldMap {
@@ -35,5 +55,17 @@ object MapReduce extends App with FoldMap {
   // Answer : Yes.
 
   println(foldMapF(List("1", "2", "3", "4", "5"))(_ + "!"))
+
+
+  implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
+
+
+  println(Await.result(foldMapPar(List("1", "2", "3", "4", "5"))(_ + "!"), 1 second))
+
+  val computation = foldMapPar(List("1", "2", "3", "4", "5"))(_ + "!")
+  computation onComplete { 
+    case Success(v) => println(s"Result => ${v}")
+    case Failure(e) => e.printStackTrace
+  }
 
 }
