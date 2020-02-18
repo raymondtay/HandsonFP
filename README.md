@@ -24,6 +24,7 @@ To start from the ground up, you basically need the following:
 - You should not have trouble cloning this repository.
 
 ![sample](./imgs/sample.jpeg)
+![state diagrams](./imgs/state.jpeg)
 
 ### A little about me
 
