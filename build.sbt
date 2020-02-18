@@ -10,7 +10,9 @@ val commonsettings = Seq(
       "-language:implicitConversions",
       "-Xfatal-warnings"
   ),
-  libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.1" % "test"
+  libraryDependencies ++= Seq(
+  "org.scala-lang.modules" %% "scala-parallel-collections" % "0.2.0",
+  "org.scalacheck" %% "scalacheck" % "1.14.1" % "test")
 )
 
 lazy val root = (project in file("."))
@@ -23,6 +25,7 @@ lazy val root = (project in file("."))
 lazy val answers = (project in file("answers"))
   .settings(commonsettings)
   .settings(
-    name := "answers to the exercises"
+    name := "answers to the exercises",
+    Test / parallelExecution := false
   )
 

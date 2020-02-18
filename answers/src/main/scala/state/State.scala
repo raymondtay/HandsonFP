@@ -63,7 +63,8 @@ object TickerOps {
   // Exercise 2: implement `map2` which combines 2 state actions into one.
   //             if you have attempted the previous exercises, this should not
   //             be unfamiliar 
-  def map2[A,B,C](ca: Counter[A], cb: Counter[B])(f: (A,B) => C) : Counter[C] = ???
+  def map2[A,B,C](ca: Counter[A], cb: Counter[B])(f: (A,B) => C) : Counter[C] =
+    flatMap(ca)(a => map(cb)(b => f(a, b)))
 
   // this is an example of a higher-combinator where we build further
   // abstractions using a simpler abstraction.
@@ -72,41 +73,65 @@ object TickerOps {
 
   // Exercise 3: implement `sequence` which evaluates each monadic action
   // in the structure from left to right, and collect the results.
-  def sequence[A](fs: List[Counter[A]]) : Counter[List[A]] = ???
+  def sequence[A](fs: List[Counter[A]]) : Counter[List[A]] =
+    fs.foldRight(unit(List[A]()))((f, acc) => map2(f, acc)(_ :: _))
 
   // ------ Bonus exercises --------------- //
 
   // Bonus exercise 1: reimplement `map` interms of `flatMap`.
-  def mapB[A,B](s: Counter[A])(f: A => B) : Counter[B] = ???
+  def mapB[A,B](s: Counter[A])(f: A => B) : Counter[B] =
+    flatMap(s)(a => unit(f(a)))
 
   // Bonus exercise 2: reimplement `map2` interms of `flatMap`.
-  def map2B[A,B,C](a: Counter[A], b: Counter[B])(f: (A,B) => C) : Counter[C] = ???
+  def map2B[A,B,C](a: Counter[A], b: Counter[B])(f: (A,B) => C) : Counter[C] =
+    flatMap(a)(_a => map(b)(_b => f(_a, _b)))
 }
 
 // Generalize it
 case class State[S,+A](run: S => (A, S)) {
 
   // Exercise 1: Generalize the functions `unit`, `map`, `map2`, `flatMap`
-  def map[B](f: A => B) : State[S, B] = ???
+  def map[B](f: A => B) : State[S, B] =
+   State{ s => 
+    val (a, ss) = run(s)
+    (f(a), ss)
+   }
 
-  // Setting a state
-  def set[S](s: S): State[S, Unit] = ???
+  // Constructs a new state based on the input, discarding any results
+  def set[S](s: S): State[S, Unit] = State(_ => ((), s))
 
-  // Getting the state
-  def get[S] : State[S,S] = ???
+  // gets the incoming state and passes it along as the value
+  def get[S] : State[S,S] = State(s => (s, s))
 
-  // Modify the state
-  def modify[S](f: S => S): State[S, Unit] = ???
+  // Modifies the state but ignores the outcome or side-effect it generates
+  // i.e. Unit.
+  def modify[S](f: S => S): State[S, Unit] =
+    for {
+      s <- get
+      _ <- set(f(s))
+    } yield ()
 
-  def flatMap[B](f: A => State[S,B]) : State[S,B] = ???
+  // Remember the importance of flatMap
+  def flatMap[B](f: A => State[S,B]) : State[S,B] =
+    State{ s => 
+      val (a, ss) = run(s)
+      f(a).run(ss)
+    }
 
-  def map2[B,C](s: State[S, B])(f: (A, B) => C) : State[S,C] = ???
+  // Combine 2 state functions as 1.
+  def map2[B,C](sb: State[S, B])(f: (A, B) => C) : State[S,C] =
+    State{ s =>
+      val (a, s1) = run(s)
+      val (b, s2) = sb.run(s1)
+      (f(a, b), s2)
+    }
+
 }
 
 // @see [companion object in Scala](https://docs.scala-lang.org/overviews/scala-book/companion-objects.html)
 object State {
 
-  def unit[S,A](a: A) : State[S,A] = ???
+  def unit[S,A](a: A) : State[S,A] = State[S,A](s => (a, s))
 
 }
 
